@@ -24,7 +24,7 @@ spinnerLoading.hidden = true;
 resultSection.hidden = true;
 notFoundSection.hidden = true;
 chrome.storage.local.get(["apartmentCode"], items => {
-    if (items) {
+    if (items && items.apartmentCode) {
         inputCodeBox.value = items.apartmentCode;
     }
 });

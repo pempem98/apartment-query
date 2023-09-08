@@ -36,35 +36,30 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 async function processQueryApartment(apartmentCode, callback) {
     console.log(`Query apartment: ${apartmentCode}`);
     try {
-        chrome.identity.getAuthToken({
-            interactive: true
-        }, (token) => {
-            gapi.auth.setToken({ "access_token": token });
-            gapi.client.sheets.spreadsheets.get({
-                spreadsheetId: SPREADSHEET_ID
+        gapi.client.sheets.spreadsheets.get({
+            spreadsheetId: SPREADSHEET_ID
+        }).then(response => {
+            let sheetTitles = [];
+            response.result.sheets.map(sheet => {
+                const title = sheet.properties.title;
+                sheetTitles.push(title);
+            });
+            gapi.client.sheets.spreadsheets.values.batchGet({
+                spreadsheetId: SPREADSHEET_ID,
+                ranges: sheetTitles,
             }).then(response => {
-                let sheetTitles = [];
-                response.result.sheets.map(sheet => {
-                    const title = sheet.properties.title;
-                    sheetTitles.push(title);
+                let all_data = [];
+                response.result.valueRanges.map(sheet => {
+                    const append_data = sheet.values;
+                    all_data.push(...append_data);
                 });
-                gapi.client.sheets.spreadsheets.values.batchGet({
-                    spreadsheetId: SPREADSHEET_ID,
-                    ranges: sheetTitles,
-                }).then(response => {
-                    let all_data = [];
-                    response.result.valueRanges.map(sheet => {
-                        const append_data = sheet.values;
-                        all_data.push(...append_data);
-                    });
-                    all_data.map(row => {
-                        if (row.includes(apartmentCode.toUpperCase())) {
-                            let entity = new Apartment(row);
-                            console.log(entity);
-                            callback({ data: entity });
-                            return;
-                        }
-                    });
+                all_data.map(row => {
+                    if (row.includes(apartmentCode.toUpperCase())) {
+                        let entity = new Apartment(row);
+                        console.log(entity);
+                        callback({ data: entity });
+                        return;
+                    }
                 });
             });
         });

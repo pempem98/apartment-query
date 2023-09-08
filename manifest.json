@@ -36,7 +36,6 @@
         ]
     },
     "permissions": [
-        "identity",
         "storage"
     ],
     "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhaGDmZAt+QN3K24+cqyVFYGiw/ozMN6dS4N+tfnrRLqEcqIO8LwP8VYu035OAG7hJo3vAZXUF1s66SHpTp2nxHvWvPTOe6l58sT9eioqnNMBB9QcplXR4j0E/LmKnbeiN7dzBdFjx1+ml2ATrtC+jpXaMBZOXWk5tK/kkVIjNP15TBCS9KlYKXG/x0gMjTCzt1O9tkV3Juy/J5O8xPJ+il51lZgtSnvgiHgc5XOU0NJemFpvzsNR2TybGMC3oTS+jkuFyGNytgHziEZ4Z5e7fI8cf97XGuQKotv7Ro7MWDDbt3qwQ7ON67oggcwB8EnlkG5yJI49PdH8LNOUhURAzQIDAQAB"
