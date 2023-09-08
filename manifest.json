@@ -1,0 +1,43 @@
+{
+    "name": "Apartment Query",
+    "version": "1.0",
+    "description": "Help you to query the apartment information faster from New Way Realty's database",
+    "manifest_version": 2,
+    "author": "lucasdo",
+    "icons": {
+        "16": "/icons/icon-16x16.png",
+        "24": "/icons/icon-24x24.png",
+        "32": "/icons/icon-32x32.png",
+        "48": "/icons/icon-48x48.png",
+        "64": "/icons/icon-64x64.png",
+        "128": "/icons/icon-128x128.png"
+    },
+    "browser_action": {
+        "default_title": "GAPI Tutorial",
+        "default_popup": "popup/popup.html",
+        "default_icon": {
+            "16": "/icons/icon-16x16.png",
+            "24": "/icons/icon-24x24.png",
+            "32": "/icons/icon-32x32.png",
+            "48": "/icons/icon-48x48.png",
+            "64": "/icons/icon-64x64.png",
+            "128": "/icons/icon-128x128.png"
+        }
+    },
+    "background": {
+        "page": "background.html",
+        "persistent": true
+    },
+    "content_security_policy": "script-src 'self' https://apis.google.com/; object-src 'self'",
+    "oauth2": {
+        "client_id": "318743324439-hg644ij9q9g544miq18isbj2eolvsogh.apps.googleusercontent.com",
+        "scopes": [
+            "https://www.googleapis.com/auth/spreadsheets.readonly"
+        ]
+    },
+    "permissions": [
+        "identity",
+        "storage"
+    ],
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhaGDmZAt+QN3K24+cqyVFYGiw/ozMN6dS4N+tfnrRLqEcqIO8LwP8VYu035OAG7hJo3vAZXUF1s66SHpTp2nxHvWvPTOe6l58sT9eioqnNMBB9QcplXR4j0E/LmKnbeiN7dzBdFjx1+ml2ATrtC+jpXaMBZOXWk5tK/kkVIjNP15TBCS9KlYKXG/x0gMjTCzt1O9tkV3Juy/J5O8xPJ+il51lZgtSnvgiHgc5XOU0NJemFpvzsNR2TybGMC3oTS+jkuFyGNytgHziEZ4Z5e7fI8cf97XGuQKotv7Ro7MWDDbt3qwQ7ON67oggcwB8EnlkG5yJI49PdH8LNOUhURAzQIDAQAB"
+}
