@@ -11,6 +11,8 @@ const resultSection = document.querySelector("section#result");
 const notFoundSection = document.querySelector("section#not-found");
 const searchButton = document.querySelector("button#search-btn");
 const inputCodeBox = document.querySelector("input#apartment-code");
+const gotoSheet = document.querySelector("#goto-sheet");
+const supplier = document.querySelector("#supplier");
 const subdivision = document.querySelector("#subdivision");
 const apartmentType = document.querySelector("#apartment-type");
 const direction = document.querySelector("#direction");
@@ -41,7 +43,7 @@ function queryApartmennt() {
         apartmentCode: apartmentCode,
     }, response => {
         try{
-            showResult(response.data);
+            showResult(response.data, response.refUrl);
         } catch (err) {
             console.log(response);
             console.log(`Got error ${err}`)
@@ -50,7 +52,8 @@ function queryApartmennt() {
     });
 }
 
-function showResult(result) {
+function showResult(result, refUrl) {
+    supplier.innerHTML = result.supplier || "No data";
     subdivision.innerHTML = result.subdivision || "No data";
     apartmentType.innerHTML = result.type || "No data";
     direction.innerHTML = result.direction || "No data";
@@ -59,6 +62,7 @@ function showResult(result) {
     plan2Price.innerHTML = result.plan2.fullPrice ? (result.plan2.fullPrice + "&nbsp;VND") : "No data";
     plan3Price.innerHTML = result.plan3.fullPrice ? (result.plan3.fullPrice + "&nbsp;VND") : "No data";
     plan4Price.innerHTML = result.plan4.fullPrice ? (result.plan4.fullPrice + "&nbsp;VND") : "No data";
+    gotoSheet.href = refUrl;
     resultSection.hidden = false;
     spinnerLoading.hidden = true;
 }

@@ -39,27 +39,33 @@ async function processQueryApartment(apartmentCode, callback) {
         gapi.client.sheets.spreadsheets.get({
             spreadsheetId: SPREADSHEET_ID
         }).then(response => {
-            let sheetTitles = [];
+            let sheetsInfo = new Map();
             response.result.sheets.map(sheet => {
                 const title = sheet.properties.title;
-                sheetTitles.push(title);
+                const gid = sheet.properties.sheetId;
+                sheetsInfo.set(title, gid);
             });
             gapi.client.sheets.spreadsheets.values.batchGet({
                 spreadsheetId: SPREADSHEET_ID,
-                ranges: sheetTitles,
+                ranges: Array.from(sheetsInfo.keys()),
             }).then(response => {
-                let all_data = [];
-                response.result.valueRanges.map(sheet => {
-                    const append_data = sheet.values;
-                    all_data.push(...append_data);
-                });
-                all_data.map(row => {
-                    if (row.includes(apartmentCode.toUpperCase())) {
-                        let entity = new Apartment(row);
-                        console.log(entity);
-                        callback({ data: entity });
-                        return;
-                    }
+                response.result.valueRanges.map(sheetData => {
+                    let rowNumber = 0;
+                    sheetData.values.map(row => {
+                        rowNumber++;
+                        if (row.includes(apartmentCode.toUpperCase())) {
+                            const sheetTitle = /(?<=\').*?(?=\')/.exec(sheetData.range)[0];
+                            const sheetId = sheetsInfo.get(sheetTitle);
+                            const refUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/#gid=${sheetId}&range=A${rowNumber}`;
+                            const entity = {
+                                data: new Apartment(row),
+                                refUrl: refUrl
+                            };
+                            console.log(entity);
+                            callback(entity);
+                            return;
+                        }
+                    });
                 });
             });
         });
